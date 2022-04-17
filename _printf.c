@@ -10,14 +10,15 @@
 int _printf(const char *format, ...)
 {
 	va_list list;
-	char *ptr, *sval
+	char *ptr, *sval;
+	int count = 0;
 	va_start(list, format);
 
 	for (p = format; *p; p++)
 	{
 		if (*p != '%')
 		{
-			_putchar(*p);
+			count += _putchar(*p);
 			continue;
 		}
 		switch(*++p)
@@ -25,13 +26,17 @@ int _printf(const char *format, ...)
 			case 's':
 				for (sval = va_arg(list, char *); *sval; sval++)
 				{
-					_putchar(*sval)
+					while (*sval != '\0')
+					{
+						count += _putchar(*sval)
+					}
 				}
 				break;
 			default:
-				_putchar(*ptr);
+				count += _putchar(*ptr);
 				break;
 		}
 	}
 	va_end(list);
+	return(count);
 }
