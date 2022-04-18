@@ -10,40 +10,34 @@
 int _printf(const char *format, ...)
 {
 	va_list list;
-	char *ptr, *sval;
+	char *ptr;
+	char *sval;
+	unsigned int i;
 	int count = 0;
 	va_start(list, format);
 
-	for (p = format; *p; p++)
+	for (ptr = format; *ptr != '\0'; ptr++)
 	{
-		while (*p != '\0')
+		while (*ptr != '%')
 		{
-		if (*p != '%')
-		{
-			count += _putchar(*p);
-			continue;
+			count += _putchar(*ptr);
+			*ptr++;
 		}
-		switch(*++p)
+		*ptr++;
+		switch(*ptr)
 		{
+			case 'c':
+				i = va_arg(list, int);
+				count += _putchar(i);
+				break;
 			case 's':
-				for (sval = va_arg(list, char *); *sval; sval++)
+				for (sval = va_arg(list, char *); *sval != '\0'; sval++)
 				{
-					count += _putchar(*sval)
+					count += _putchar(*sval);
 				}
 				break;
-			default:
-				count += _putchar(*ptr);
-				break;
-		}
 		}
 	}
 	va_end(list);
 	return(count);
-}
-
-int main()
-{
-	int s = _printf("Hello");
-	printf(s);
-	return 0;
 }
