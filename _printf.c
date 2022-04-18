@@ -16,6 +16,8 @@ int _printf(const char *format, ...)
 
 	for (p = format; *p; p++)
 	{
+		while (*p != '\0')
+		{
 		if (*p != '%')
 		{
 			count += _putchar(*p);
@@ -26,17 +28,22 @@ int _printf(const char *format, ...)
 			case 's':
 				for (sval = va_arg(list, char *); *sval; sval++)
 				{
-					while (*sval != '\0')
-					{
-						count += _putchar(*sval)
-					}
+					count += _putchar(*sval)
 				}
 				break;
 			default:
 				count += _putchar(*ptr);
 				break;
 		}
+		}
 	}
 	va_end(list);
 	return(count);
+}
+
+int main()
+{
+	int s = _printf("Hello");
+	printf(s);
+	return 0;
 }
