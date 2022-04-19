@@ -4,9 +4,9 @@
  * @str: list of arguments
  * 
  */
-int _print_str(*str)
+int _print_str(char *str)
 {
-	int i; 
+	int i;
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
