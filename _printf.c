@@ -9,41 +9,38 @@
  */
 int _printf(const char *format, ...)
 {
-	va_list list;
-	char *ptr, *sval;
-	int count = 0;
-	va_start(list, format);
+int (*pfunc)(va_list, flags_t *);
+const char *p;
+va_list arguments;
+flags_t flags = {0, 0, 0};
 
-	for (p = format; *p; p++)
-	{
-		while (*p != '\0')
-		{
-		if (*p != '%')
-		{
-			count += _putchar(*p);
-			continue;
-		}
-		switch(*++p)
-		{
-			case 's':
-				for (sval = va_arg(list, char *); *sval; sval++)
-				{
-					count += _putchar(*sval)
-				}
-				break;
-			default:
-				count += _putchar(*ptr);
-				break;
-		}
-		}
-	}
-	va_end(list);
-	return(count);
-}
+register int count = 0;
 
-int main()
+va_start(arguments, format);
+if (!format || (format[0] == '%' && !format[1]))
+return (-1);
+if (format[0] == '%' && format[1] == ' ' && !format[2])
+return (-1);
+for (p = format; *p; p++)
 {
-	int s = _printf("Hello");
-	printf(s);
-	return 0;
+if (*p == '%')
+{
+p++;
+if (*p == '%')
+{
+count += _putchar('%');
+continue;
+}
+while (get_flag(*p, &flags))
+p++;
+pfunc = get_print(*p);
+count += (pfunc)
+? pfunc(arguments, &flags)
+: _printf("%%%c", *p);
+} else
+count += _putchar(*p);
+}
+_putchar(-1);
+va_end(arguments);
+return (count);
 }
