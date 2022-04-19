@@ -23,16 +23,27 @@ for (j = 0; format[j] != '\0'; j++)
 {
 if (format[j] == '%')
 {
-switch(format[j + 1])
-{
-case 'c':
-i = va_arg(list, int);
-_putchar(i);
-res = 1;
-break;
-case 's':
-res = _print_str(va_arg(list, char *));
-break;
+	j++;
+	switch (format[j])
+	{
+	case 'c':
+		i = va_arg(list, int);
+		_putchar(i);
+		res = 1;
+		break;
+	case 's':
+		res = _print_str(va_arg(list, char *));
+		break;
+	case '%':
+		_putchar('%');
+		res = 1;
+		break;
+	case 'd':
+		res = _print_int(list);
+		break;
+	case 'i':
+		res = _print_int(list);
+		break;
 }
 }
 else
