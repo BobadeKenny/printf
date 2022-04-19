@@ -11,8 +11,8 @@ int _printf(const char *format, ...)
 {
 va_list list;
 unsigned int i;
-int j, res;
-	
+int j;
+int res = 0;
 
 if(format == NULL)
 {
@@ -27,12 +27,17 @@ switch(format[j + 1])
 {
 case 'c':
 i = va_arg(list, int);
-res = _putchar(i);
+_putchar(i);
+res = 1;
 break;
 case 's':
 res = _print_str(va_arg(list, char *));
 break;
 }
+}
+else
+{
+	res += _putchar(format[j]);
 }
 }
 va_end(list);
