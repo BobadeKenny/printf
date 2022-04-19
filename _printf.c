@@ -2,9 +2,9 @@
 
 /**
  * _printf - writes the character c to stdout
- * @char: The character to print
+ * @format: The character string
  *
- * Return: On success 1.
+ * Return: On success total number of characters.
  * On error, -1 is returned, and errno is set appropriately.
  */
 int _printf(const char *format, ...)
