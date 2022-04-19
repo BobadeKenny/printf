@@ -2,42 +2,38 @@
 
 /**
  * _printf - writes the character c to stdout
- * @char: The character to print
+ * @format: The character string
  *
- * Return: On success 1.
+ * Return: On success total number of characters.
  * On error, -1 is returned, and errno is set appropriately.
  */
 int _printf(const char *format, ...)
 {
 	va_list list;
-	char *ptr;
-	char *sval;
 	unsigned int i;
-	int count = 0;
-	va_start(list, format);
+	int j, res;
 
-	for (ptr = format; *ptr != '\0'; ptr++)
+	if(format == NULL)
 	{
-		while (*ptr != '%')
+		return (-1);
+	}
+	va_start(list, format);
+	for (j = 0; format[j] != '\0'; j++)
+	{
+		if (format[j] == '%')
 		{
-			count += _putchar(*ptr);
-			*ptr++;
-		}
-		*ptr++;
-		switch(*ptr)
-		{
-			case 'c':
-				i = va_arg(list, int);
-				count += _putchar(i);
-				break;
-			case 's':
-				for (sval = va_arg(list, char *); *sval != '\0'; sval++)
-				{
-					count += _putchar(*sval);
-				}
-				break;
+			switch(format[j + 1])
+			{
+				case 'c':
+					i = va_arg(list, int);
+					res = _putchar(i);
+					break;
+				case 's':
+					res = _print_str(va_arg(list, char *));
+					break;
+			}
 		}
 	}
 	va_end(list);
-	return(count);
+	return(res);
 }
